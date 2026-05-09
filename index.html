@@ -1,1 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Garage Band Mário Cravo | Músicas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+<!-- Barra de navegação -->
+<div class="navbar">
+    <div class="nav-container">
+        <div class="logo">🎸 Garage Band Mário Cravo</div>
+        <div class="nav-links">
+            <a href="index.html" class="active">🎵 Músicas</a>
+            <a href="spleeter.html">🎛️ Backing Track</a>
+            <a href="biblioteca.html">📚 Biblioteca</a>
+            <a href="ensaios.html">📹 Ensaios</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Apenas busca - sem textos desnecessários -->
+    <div class="search-container">
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Digite música ou artista..." autocomplete="off">
+        </div>
+    </div>
+
+    <div id="resultsContent"></div>
+</div>
+
+<script src="musicas.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
