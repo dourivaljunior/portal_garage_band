@@ -1,1 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Garage Band | Backing Track com IA</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+<div class="navbar">
+    <div class="nav-container">
+        <div class="logo">🎸 Garage Band Mário Cravo</div>
+        <div class="nav-links">
+            <a href="index.html">🎵 Músicas</a>
+            <a href="spleeter.html" class="active">🎛️ Backing Track</a>
+            <a href="biblioteca.html">📚 Biblioteca</a>
+            <a href="ensaios.html">📹 Ensaios</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <a href="index.html" class="back-btn">← Voltar para página principal</a>
+    
+    <div class="content-card">
+        <h1 style="color:#ffb347; margin-bottom:20px;">🎛️ Gerador de Backing Track</h1>
+        <p style="margin-bottom:20px; color:rgba(255,255,255,0.8);">
+            Envie uma música e o AI (Spleeter) irá separar a voz do instrumental.<br>
+            Você receberá a <strong>Backing Track (instrumental)</strong> para praticar!
+        </p>
+        
+        <div class="upload-area" id="uploadArea">
+            <div style="font-size: 48px; margin-bottom: 16px;">📁</div>
+            <p style="margin-bottom: 8px;">Clique ou arraste um arquivo de áudio</p>
+            <p style="font-size: 0.8rem; color: rgba(255,255,255,0.5);">MP3, WAV, FLAC, M4A (máx. 50MB)</p>
+            <input type="file" id="fileInput" accept="audio/*" style="display: none;">
+        </div>
+        
+        <div id="loadingArea" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Processando com Spleeter... Isso pode levar alguns segundos ⏳</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+        
+        <div id="resultsArea" class="results-area">
+            <h3 style="color:#ffcc77; margin-bottom:16px;">✅ Processamento concluído!</h3>
+            <div class="result-links">
+                <a href="#" id="vocalLink" class="btn">🎤 Baixar Vocal</a>
+                <a href="#" id="instrumentalLink" class="btn">🎸 Baixar Backing Track</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const loadingArea = document.getElementById('loadingArea');
+    const resultsArea = document.getElementById('resultsArea');
+    const progressFill = document.getElementById('progressFill');
+    const vocalLink = document.getElementById('vocalLink');
+    const instrumentalLink = document.getElementById('instrumentalLink');
+    
+    // API do backend Spleeter (ajuste a porta se necessário)
+    const API_URL = 'http://localhost:8000/separate';
+    
+    uploadArea.addEventListener('click', () => fileInput.click());
+    
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.style.borderColor = '#ffb347';
+        uploadArea.style.background = 'rgba(0,0,0,0.5)';
+    });
+    
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.style.borderColor = 'rgba(255,180,71,0.5)';
+        uploadArea.style.background = 'rgba(0,0,0,0.3)';
+    });
+    
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.style.borderColor = 'rgba(255,180,71,0.5)';
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('audio/')) {
+            processFile(file);
+        } else {
+            alert('Por favor, envie um arquivo de áudio válido.');
+        }
+    });
+    
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files[0]) processFile(e.target.files[0]);
+    });
+    
+    async function processFile(file) {
+        // Valida tamanho (50MB)
+        if (file.size > 50 * 1024 * 1024) {
+            alert('Arquivo muito grande! Máximo 50MB.');
+            return;
+        }
+        
+        // Mostra loading
+        loadingArea.style.display = 'block';
+        resultsArea.classList.remove('show');
+        progressFill.style.width = '30%';
+        
+        const formData = new FormData();
+        formData.append('audio', file);
+        
+        try {
+            progressFill.style.width = '60%';
+            
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                body: formData
+            });
+            
+            progressFill.style.width = '90%';
+            
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.detail || 'Erro no processamento');
+            }
+            
+            const result = await response.json();
+            progressFill.style.width = '100%';
+            
+            // Configura links de download
+            vocalLink.href = result.vocal_url;
+            instrumentalLink.href = result.instrumental_url;
+            
+            setTimeout(() => {
+                loadingArea.style.display = 'none';
+                resultsArea.classList.add('show');
+            }, 500);
+            
+        } catch (error) {
+            loadingArea.style.display = 'none';
+            alert('Erro: ' + error.message + '\n\nVerifique se o servidor Spleeter está rodando.');
+            console.error(error);
+        }
+    }
+</script>
+</body>
+</html>
