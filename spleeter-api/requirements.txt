@@ -1,1 +1,7 @@
-
+fastapi==0.104.1
+uvicorn==0.24.0
+python-multipart==0.0.6
+spleeter==2.4.0
+tensorflow==2.13.0
+librosa==0.10.0
+soundfile==0.12.1
