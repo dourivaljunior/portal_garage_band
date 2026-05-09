@@ -1,0 +1,430 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-image: url('fundo.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fff;
+    min-height: 100vh;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 100%);
+    z-index: 0;
+}
+
+/* Navbar */
+.navbar {
+    position: relative;
+    z-index: 10;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,180,71,0.3);
+    padding: 0 24px;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.logo {
+    font-size: 1.2rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #ffd966, #ffb347);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.nav-links {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    padding: 8px 0;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: #ffb347;
+    border-bottom: 2px solid #ffb347;
+}
+
+/* Container principal */
+.container {
+    position: relative;
+    z-index: 1;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    min-height: calc(100vh - 80px);
+}
+
+/* Busca */
+.search-container {
+    max-width: 550px;
+    margin: 0 auto 40px auto;
+    width: 100%;
+}
+
+.search-box {
+    position: relative;
+    width: 100%;
+}
+
+.search-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    pointer-events: none;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 18px 20px 18px 52px;
+    font-size: 1rem;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 60px;
+    outline: none;
+    background: rgba(255,255,255,0.95);
+    color: #1a1a2e;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.search-box input:focus {
+    border-color: #ffb347;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(255,180,71,0.2);
+}
+
+/* Botão voltar */
+.back-btn {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    padding: 12px 28px;
+    font-size: 0.95rem;
+    border-radius: 40px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.back-btn:hover {
+    background: rgba(255,255,255,0.25);
+    transform: translateX(-4px);
+}
+
+/* Cards de música */
+.music-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.music-card {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 16px 20px;
+    transition: all 0.25s ease;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.music-card:hover {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,180,71,0.4);
+}
+
+.music-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.music-info-left {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 12px;
+    flex: 2;
+    min-width: 180px;
+}
+
+.music-title {
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 12px;
+    padding: 4px 8px;
+    margin: -4px -8px;
+}
+
+.music-title:hover {
+    background: rgba(255,180,71,0.2);
+    transform: scale(1.01);
+}
+
+.music-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffdd99;
+    margin-bottom: 4px;
+}
+
+.music-artist {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+}
+
+.link-lyrics {
+    font-size: 0.7rem;
+    color: #ffb347;
+    background: rgba(255,180,71,0.15);
+    padding: 4px 10px;
+    border-radius: 30px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.music-controls {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.player-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.player-label span {
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.6);
+    font-weight: 500;
+}
+
+audio {
+    height: 34px;
+    border-radius: 40px;
+    width: 130px;
+}
+
+/* Páginas de detalhe e conteúdo */
+.detail-container, .content-card {
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(16px);
+    border-radius: 32px;
+    padding: 40px;
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+.lyrics-section {
+    flex: 3;
+}
+
+.lyrics-section h3 {
+    color: #ffb347;
+    margin-bottom: 24px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border-left: 4px solid #ffb347;
+    padding-left: 16px;
+}
+
+.lyrics-content {
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #f5f5dc;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 65vh;
+    overflow-y: auto;
+    padding: 8px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 20px;
+}
+
+/* Grid para biblioteca e ensaios */
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    margin-top: 30px;
+}
+
+.card {
+    background: rgba(255,255,255,0.1);
+    border-radius: 24px;
+    padding: 24px;
+    transition: all 0.2s;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.card:hover {
+    background: rgba(255,255,255,0.15);
+    transform: translateY(-4px);
+}
+
+.card h3 {
+    color: #ffcc77;
+    margin-bottom: 12px;
+}
+
+.card p {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+}
+
+.btn {
+    background: rgba(255,180,71,0.2);
+    border: 1px solid rgba(255,180,71,0.5);
+    padding: 8px 16px;
+    border-radius: 40px;
+    color: #ffb347;
+    text-decoration: none;
+    font-size: 0.8rem;
+    display: inline-block;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: rgba(255,180,71,0.4);
+    color: white;
+}
+
+/* Spleeter específico */
+.upload-area {
+    border: 2px dashed rgba(255,180,71,0.5);
+    border-radius: 24px;
+    padding: 40px;
+    text-align: center;
+    background: rgba(0,0,0,0.3);
+    margin: 20px 0;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.upload-area:hover {
+    border-color: #ffb347;
+    background: rgba(0,0,0,0.5);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #ffb347, #ffd966);
+    transition: width 0.3s;
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255,255,255,0.2);
+    border-top-color: #ffb347;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.results-area {
+    margin-top: 30px;
+    display: none;
+}
+
+.results-area.show {
+    display: block;
+}
+
+.result-links {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .container {
+        padding: 24px 16px;
+    }
+    
+    .detail-container {
+        padding: 24px;
+    }
+    
+    .music-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .music-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
